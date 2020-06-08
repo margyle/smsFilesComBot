@@ -2,7 +2,7 @@ import requests
 from flask import Flask, request, redirect, jsonify
 from twilio.twiml.messaging_response import MessagingResponse
 
-#dir to save the inbound images
+#local dir to save the inbound images
 DOWNLOAD_DIRECTORY = 'img'
 app = Flask(__name__)
 
