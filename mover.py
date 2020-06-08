@@ -6,10 +6,8 @@ headers = {'content-type': 'application/json',
 'X-FilesAPI-Key': 'YOUR FILES.COM API KEY'
 }
 
-
 class Watcher:
     DIRECTORY_TO_WATCH = "img"
-
     def __init__(self):
         self.observer = Observer()
 
@@ -28,7 +26,6 @@ class Watcher:
 
 
 class Handler(FileSystemEventHandler):
-
     @staticmethod
     def on_any_event(event):
         if event.is_directory:
@@ -44,18 +41,17 @@ class Handler(FileSystemEventHandler):
             
             strippedFile = event.src_path.replace('img/','')
             
-            #make start upload call to files.com API
-            urlBase1 = 'https://YOURSUBDIRECTORY.files.com/api/rest/v1/files/catBot/' + strippedFile + '/?action=put'
+            #make start upload call to files.com API(file upload is a three step process)
+            urlBase1 = 'https://YOURSUBDIRECTORY.files.com/api/rest/v1/files/YOUR_DIRECTORY/' + strippedFile + '/?action=put'
             #debug
             print ('****url base=' + urlBase1)
 
             r = requests.post(urlBase1, headers=headers)
             jsonResponse = r.json()
             print(jsonResponse)
-
+            #get vars for subsequent calls
             uploadUri = jsonResponse['upload_uri']
             uploadRef = jsonResponse['ref']
-
 
             #upload actual file
             data = open(event.src_path, 'rb').read()
@@ -64,10 +60,8 @@ class Handler(FileSystemEventHandler):
                     headers={'Content-Type': 'application/octet-stream'})
             print(r2)
 
-            #end upload actual
-
             #close out the upload!
-            urlBase2 = 'https://YOURSUBDIRECTORY.files.com/api/rest/v1/files/catBot/' + strippedFile + '/?action=end&ref=' + uploadRef
+            urlBase2 = 'https://YOURSUBDIRECTORY.files.com/api/rest/v1/files/YOUR_DIRECTORY/' + strippedFile + '/?action=end&ref=' + uploadRef
             #send the request
             r3 = requests.post(urlBase2, headers=headers)
             print(r3)
