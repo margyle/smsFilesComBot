@@ -49,7 +49,8 @@ def files_api_upload(filename):
             r = requests.post(startUploadUrl, headers=headers)
             jsonResponse = r.json()
             print(jsonResponse)
-
+            
+            #get params for next call
             uploadUri = jsonResponse['upload_uri']
             uploadRef = jsonResponse['ref']
 
