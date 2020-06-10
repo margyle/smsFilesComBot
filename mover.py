@@ -45,7 +45,7 @@ def files_api_upload(strippedFile, filePath):
             headers = {'content-type': 'application/json',
             'X-FilesAPI-Key': '**YOUR API KEY***'
             }
-            urlBase = 'https://**YOUR_SUBDOMAIN**.files.com/api/rest/v1/files/catBot/'
+            urlBase = 'https://**YOUR_SUBDOMAIN**.files.com/api/rest/v1/files/**YOUR FOLDER NAME**/'
 
             #make start upload call to files.com API
             startUploadUrl = urlBase + strippedFile + '/?action=put'
